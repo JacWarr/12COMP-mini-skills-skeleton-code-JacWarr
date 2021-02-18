@@ -16,8 +16,11 @@ var object2 = {
   xVel : 2,
   yVel : 4,
   radius : 10,
-  diameter : 20
-  move: function() {
+  diameter : 20,
+  display : function() {
+    ellipse(this.xPos, this.yPos, this.diameter);
+  },
+  moving : function() {
     this.xPos += this.xVel;
     this.yPos += this.yVel;
   },
@@ -49,14 +52,17 @@ function draw() {
 /********************************************************/
   ellipse(object1.xPos, object1.yPos, object1.diameter);
 
-  bound(object1.xPos, object1.radius, object1.xVel);
-  bound(object1.yPos, object1.radius, object1.yVel);
+  object1.xVel = bound(object1.xPos, object1.radius, object1.xVel);
+  object1.yVel = bound(object1.yPos, object1.radius, object1.yVel);
 
   move();
 /********************************************************/
   //object2
 /********************************************************/
-  ellipse(object2.xPos, object2.yPos, object2.diameter);
+  object2.moving();
+  object2.xBound();
+  object2.yBound();
+  object2.display();
 
 /********************************************************/
 }
@@ -69,5 +75,5 @@ function bound(position, halfWidth, velocity) {
   if(position >= width-halfWidth || position <= halfWidth) {
     velocity *= -1;
   }
-
+  return(velocity);
 }
